@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function App() {
   return (
@@ -14,18 +21,16 @@ export default function App() {
       <Text style={styles.textInputPlaceholder}>Email</Text>
       <TextInput
         style={styles.input}
-        placeholder="E-mail"
+        placeholder="E-mail..."
         keyboardType="email-address"
         autoCapitalize="none"
       />
       <Text style={styles.textInputPlaceholder}>Senha</Text>
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
+      <TextInput style={styles.input} placeholder="Senha..." secureTextEntry />
 
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
-
-      
     </View>
   );
 }
@@ -39,44 +44,49 @@ const styles = StyleSheet.create({
   },
 
   textLogin: {
-    color: 'white',
+    color: "#0000ff",
     fontSize: 40,
-    fontFamily: 'Roboto'
+    fontFamily: "serif",
+    fontWeight: "bold",
+    textAlign: "center",
+    textTransform: "uppercase",
+    letterSpacing: 2,
+    lineHeight: 50,
   },
 
   textInputPlaceholder: {
-    color: 'gray',
+    color: "gray",
     fontSize: 20,
-    marginRight: 250
+    marginRight: 250,
   },
 
   logo: {
-    width: '70%',
+    width: "70%",
     height: 170,
     marginBottom: 20,
-
   },
   input: {
     height: 40,
-    width: '80%',
-    borderColor: 'gray',
+    width: "80%",
+    borderColor: "gray",
     borderWidth: 2,
     marginBottom: 10,
     paddingLeft: 10,
-    borderRadius: 5
+    borderRadius: 5,
+    color: "white",
   },
-  
+
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
-    width: '80%'
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    width: "80%",
   },
 
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
 });
