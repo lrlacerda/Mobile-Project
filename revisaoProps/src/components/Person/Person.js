@@ -16,7 +16,10 @@ const styles = StyleSheet.create({
      padding: 10,
      margin: 10,
      borderRadius: 5,
-     marginTop: 50
+     marginTop: 50,
+    },
+    text: {
+        fontFamily: 'PermanentMarker_400Regular',
     },
 });
 
