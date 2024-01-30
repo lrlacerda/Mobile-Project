@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Container } from "./src/components/Container/Container";
+import { Button, ButtonDecremento } from "./src/components/Button/Button";
+import { Title, TitleContador } from "./src/components/Title/Title";
+import { ImageContador } from "./src/components/img/img";
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -23,51 +25,19 @@ export default function App() {
 
   return (
     <Container>
+      <ImageContador source={require("./src/components/img/numeros.jpg")} />
 
-      <Text style={styles.textoContador}>Contador: {count} </Text>
-      
-      <TouchableOpacity onPress={increment} style={styles.botao}>
-        <Text style={styles.textoBotao}>Incrementar</Text>
-      </TouchableOpacity>
+      <TitleContador>Contador: {count} </TitleContador>
 
-      <TouchableOpacity onPress={decrement} style={styles.botaoDecrement}>
-        <Text style={styles.textoBotao}>Decrementar</Text>
-      </TouchableOpacity>
+      <Button onPress={increment}>
+        <Title>Incrementar</Title>
+      </Button>
+
+      <ButtonDecremento onPress={decrement}>
+        <Title>Decrementar</Title>
+      </ButtonDecremento>
 
       <StatusBar style="auto" />
     </Container>
   );
 }
-
-const styles = StyleSheet.create({
- 
-  botao: {
-    backgroundColor: "green",
-    marginTop: 15,
-    padding: 20,
-    borderRadius: 10,
-    height: 80,
-    width: 200,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  botaoDecrement: {
-    backgroundColor: "red",
-    marginTop: 15,
-    padding: 20,
-    borderRadius: 10,
-    height: 80,
-    width: 200,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textoBotao: {
-    color: "white",
-    fontSize: 25,
-  },
-  textoBotaoDecrement: {},
-  textoContador: {
-    fontSize: 30,
-    color: "white",
-  },
-});
