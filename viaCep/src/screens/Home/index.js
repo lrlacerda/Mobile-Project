@@ -1,3 +1,4 @@
+import { BoxInput } from "../../components/BoxInput";
 import { ContainerForm, ScrollForm } from "./style";
 
 export function Home() {
@@ -11,7 +12,12 @@ export function Home() {
 
         <ScrollForm>
             <ContainerForm>
-                <BoxInput/>
+                <BoxInput
+                    textLabel='Informe o CEP'
+                    placeholder='Cep...'
+                    KeyType="numeric"
+                    maxLenght={9}
+                />
             </ContainerForm>
         </ScrollForm>
         
