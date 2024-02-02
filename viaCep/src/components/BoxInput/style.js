@@ -4,5 +4,6 @@ import styled from "styled-components";
 export const FieldContent = styled.View`
 
     /* define o valor da largura como o valor da props.fieldWidth */
-    width: ${props => `${props.fieldWidth}%`}
+    width: ${props => `${props.fieldWidth}%`};
+    margin-bottom: 20px
 `

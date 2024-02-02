@@ -9,7 +9,7 @@ export const BoxInput = ({
     textLabel,
     placeholder,
     fieldValue = null,
-    onchangeText = null,
+    onChangeText = null,
     KeyType = 'default',
     maxLenght 
 }) => {
@@ -25,7 +25,67 @@ export const BoxInput = ({
             KeyType={KeyType}
             maxLenght={maxLenght}
             fieldValue={fieldValue}
-            onchangeText={onchangeText}
+            onChangeText={onChangeText}
+        />
+        </FieldContent>
+       
+    )
+}
+
+export const BoxInputEstado = ({
+    //definir props
+    fieldWidth,
+    editable = false,
+    textLabel,
+    placeholder,
+    fieldValue = null,
+    onChangeText = null,
+    KeyType = 'default',
+    maxLenght 
+}) => {
+    return (
+        <FieldContent fieldWidth={fieldWidth}>
+        {/* //Label */}
+        <Label textLabel={textLabel}/>
+
+        {/* //Input */}
+        <Input
+            placeholder={placeholder}
+            editable={editable}
+            KeyType={KeyType}
+            maxLenght={maxLenght}
+            fieldValue={fieldValue}
+            onChangeText={onChangeText}
+        />
+        </FieldContent>
+       
+    )
+}
+
+export const BoxInputUf = ({
+    //definir props
+    fieldWidth,
+    editable = false,
+    textLabel,
+    placeholder,
+    fieldValue = null,
+    onChangeText = null,
+    KeyType = 'default',
+    maxLenght 
+}) => {
+    return (
+        <FieldContent fieldWidth={fieldWidth}>
+        {/* //Label */}
+        <Label textLabel={textLabel}/>
+
+        {/* //Input */}
+        <Input
+            placeholder={placeholder}
+            editable={editable}
+            KeyType={KeyType}
+            maxLenght={maxLenght}
+            fieldValue={fieldValue}
+            onChangeText={onChangeText}
         />
         </FieldContent>
        

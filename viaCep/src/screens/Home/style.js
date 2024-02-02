@@ -5,5 +5,10 @@ export const ScrollForm = styled.ScrollView`
 `
 export const ContainerForm = styled.SafeAreaView`
     width: 100%;
-    padding: 30px
+    padding: 30px;
+`
+export const ContainerForm2 = styled.SafeAreaView`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between
 `

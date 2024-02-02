@@ -23,3 +23,4 @@ export const TextHeader = styled.Text`
     color: #333E33;
     text-align: center;
 `
+
