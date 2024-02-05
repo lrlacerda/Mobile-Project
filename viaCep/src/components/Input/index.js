@@ -7,6 +7,7 @@ export function Input({
     onChangeText,
     KeyType,
     maxLength,
+    onblur,
 }) {
     return (
         <InputText
@@ -16,6 +17,7 @@ export function Input({
             maxLength={maxLength}
             value={fieldValue}
             onChangeText={onChangeText}
+            onblur={onblur}
         />
     )
 }

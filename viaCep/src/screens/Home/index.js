@@ -12,35 +12,52 @@ export function Home() {
     const [estado, setEstado] = useState('');
     const [uf, setUf] = useState('');
 
+    const isCepValid = (cep) => cep && typeof cep === 'string' && cep.length === 8;
     //hoks - effect
         
-        useEffect(async () => {
-            // chamada da api
-           
-                try {
-                    if (cep !="" && cep.length === 8) {
-                      const endereco = await axios.get(`http://viacep.com.br/ws/${cep}/json/`);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (isCepValid(cep)) {
+                    const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+                    
+                    console.log("API Response:", response.data); 
 
-                      if (endereco.error) {
-                        alert("Erro ao buscar o CEP")
+                    if (response.data.erro) {
+                        alert("CEP não encontrado");
+                        clearAddressFields();
                         return;
-                      }
-                      setLogradouro(endereco.data.logradouro)
-                      setBairro(endereco.data.bairro)
-                      setCidade(endereco.data.cidade)
-                      setEstado(endereco.data.estado)
-                      setUf(endereco.data.uf)
-                      }
-        
-                } catch (error) {
-                    console.log("Erro ao buscar o CEP ");
+                    }
+
+                    setLogradouro(response.data.logradouro);
+                    setBairro(response.data.bairro);
+                    setCidade(response.data.localidade);
+                    setEstado(response.data.uf);
+                    setUf(response.data.uf);
+                } else {
+                    // Limpar os campos se o CEP não for válido
+                    clearAddressFields();
                 }
-        }, [cep]);
+            } catch (error) {
+                console.error("Erro ao buscar o CEP", error);
+            }
+        };
+
+        fetchData();
+    }, [cep]);
+
+    const clearAddressFields = () => {
+        setLogradouro('');
+        setBairro('');
+        setCidade('');
+        setEstado('');
+        setUf('');
+    };
 
     return (
         //ScrollForm
         //ContainerForm
-        //BoxInput - label e input
+        // BoxInput - label e input
 
         <ScrollForm>
             <ContainerForm>
@@ -48,7 +65,7 @@ export function Home() {
                     textLabel='Informe o CEP'
                     placeholder='Cep...'
                     KeyType="numeric"
-                    maxLenght={9}
+                    maxLenght={8}
                     editable={true}
                     fieldValue={cep}
                     onchangeText={(tx) => {
