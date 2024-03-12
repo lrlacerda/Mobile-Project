@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 // Importando dependência do mapa
@@ -8,6 +8,9 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
+
+  watchPositionAsync, //monitorar o posicionamento
+  LocationAccuracy, 
 } from "expo-location";
 
 import MapViewDirections from "react-native-maps-directions";
@@ -15,7 +18,12 @@ import MapViewDirections from "react-native-maps-directions";
 import { mapskey } from "./utils/mapsApiKey";
 
 export default function App() {
+  const mapReference = useRef(null);
   const [initialPosition, setIniticalPosition] = useState(null);
+  const [finalPosition, setFinalPosition] = useState({
+    latitude: -23.206,
+    longitude: -46.7836,
+  });
 
   const [markerImageVisible, setMarkerImageVisible] = useState(false);
 
@@ -33,7 +41,47 @@ export default function App() {
 
   useEffect(() => {
     CapturarLocalizacao();
-  }, []);
+
+    //monitorar em tempo real
+    watchPositionAsync({
+      accuracy: LocationAccuracy.Highest,
+      timeInterval: 1000,
+      distanceInterval: 1,
+    }, async (response) => {
+      await setIniticalPosition(response)
+
+      mapReference.current?.animatedCamera({
+        picht: 60,
+        center: response.coords
+      })
+    }
+    )
+  }, [1000]);
+
+  useEffect(() => {
+    RecarregarVisualizarMapa();
+  }, [initialPosition]);
+
+  async function RecarregarVisualizarMapa() {
+    if (mapReference.current && initialPosition) {
+      await mapReference.current.fitToCoordinates(
+        [
+          {
+            latitude: initialPosition.coords.latitude,
+            longitude: initialPosition.coords.longitude,
+          },
+          {
+            latitude: finalPosition.latitude,
+            longitude: finalPosition.longitude,
+          },
+        ],
+        {
+          edgePadding: { top: 60, right: 60, bottom: 60, left: 60 },
+          animated: true,
+        }
+      );
+    }
+  }
 
   const handleMarkerPress = () => {
     setMarkerImageVisible(!markerImageVisible);
@@ -43,6 +91,7 @@ export default function App() {
     <View style={styles.container}>
       {initialPosition != null ? (
         <MapView
+          ref={mapReference}
           initialRegion={{
             latitude: initialPosition.coords.latitude,
             longitude: initialPosition.coords.longitude,
@@ -76,6 +125,28 @@ export default function App() {
             strokeColor="#496bba"
             apikey={mapskey}
           />
+
+            {/* Adicionando o marcador para o destino */}
+            <Marker
+            coordinate={{
+              latitude: finalPosition.latitude,
+              longitude: finalPosition.longitude,
+            }}
+            title="Destino"
+            description="Local de destino"
+            pinColor="#ff0000"
+          />
+
+          <MapViewDirections
+            origin={finalPosition.coords}
+            destination={{
+              latitude: finalPosition.latitude,
+              longitude: finalPosition.longitude,
+            }}
+            strokeWidth={5}
+            strokeColor="#496bba"
+            apikey={mapskey}
+          />
         </MapView>
       ) : (
         <View style={styles.loadingContainer}>
@@ -85,10 +156,10 @@ export default function App() {
       )}
       {markerImageVisible && (
         <View style={styles.markerImageContainer}>
-          <Image
+          {/* <Image
             source={require("./assets/image/entrega_hospital_igesp_fotofredcasagrande_24-03-2023-84-scaled.jpg")} // Substitua pelo caminho da sua imagem
             style={styles.markerImage}
-          />
+          /> */}
         </View>
       )}
     </View>
@@ -117,6 +188,13 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     elevation: 5,
+  },
+
+  markerImage: {
+    position: "absolute",
+    // marginTop: -590,
+    width: 50,
+    height: 50,
   },
 });
 
